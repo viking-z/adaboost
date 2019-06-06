@@ -1,9 +1,11 @@
+#加载工具包
 import matplotlib.pyplot as plt
 from sklearn.datasets import make_gaussian_quantiles
 from sklearn.ensemble import AdaBoostClassifier
 from sklearn.metrics import accuracy_score
 from sklearn.tree import DecisionTreeClassifier
 
+#处理数据
 X, y = make_gaussian_quantiles(n_samples = 13000, n_features = 10,
 			       n_classes = 3, random_state = 1)
 
@@ -26,9 +28,11 @@ bdt_discrete = AdaBoostClassifier(
 bdt_real.fit(X_train, y_train)
 bdt_discrete.fit(X_train, y_train)
 
+#建立两个空的数组
 real_test_errors = []
 discrete_test_errors = []
 
+#训练模型
 for real_test_predict, discrete_train_predict in zip(
 	bdt_real.staged_predict(X_test), bdt_discrete.staged_predict(X_test)):
     real_test_errors.append(
@@ -43,6 +47,8 @@ discrete_estimator_errors = bdt_discrete.estimator_errors_[:n_trees_discrete]
 real_estimator_errors = bdt_real.estimator_errors_[:n_trees_real]
 discrete_estimator_weights = bdt_discrete.estimator_weights_[:n_trees_discrete]
 
+#绘图
+#一共绘制出3个图
 plt.figure(figsize=(15,5))
 
 plt.subplot(131)
